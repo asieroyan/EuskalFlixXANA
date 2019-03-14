@@ -22,6 +22,8 @@ public class FilmCatalogue {
 	}
 	
 	public void printFilms() {
-		System.out.println(list.print());
+		System.out.println("Films Imported:"+this.list.size());
+		System.out.println("--------------------------------------------------------------------------------------");
+		list.printFilms();
 	}
 }

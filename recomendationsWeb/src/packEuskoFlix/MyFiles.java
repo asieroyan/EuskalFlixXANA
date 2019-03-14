@@ -26,7 +26,8 @@ public class MyFiles {
 			while(sc.hasNext()) {
 				information = sc.nextLine();
 				v1 = information.split(";");
-				Film film = new Film(v1[1],v1[0]); //first name, second filmId
+				Integer idFilm=Integer.parseInt(v1[0]);
+				Film film = new Film(v1[1],idFilm); //first name, second filmId
 				films.add(film);
 			}
 		}

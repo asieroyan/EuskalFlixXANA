@@ -5,10 +5,10 @@ import java.util.Collection;
 
 public class Film implements Comparable<Film>{
 	private String name;
-	private String id;
+	private Integer id;
 	private Collection<Review> reviewList;
 	
-	public Film(String pName, String pId) {
+	public Film(String pName, Integer pId) {
 		this.name = pName;
 		this.id = pId;
 		reviewList = new ArrayList<Review>();
@@ -20,5 +20,11 @@ public class Film implements Comparable<Film>{
 	}
 	public String getName() {
 		return name;
+	}
+	public int compareToByID(Film pFilm) {
+		return id.compareTo(pFilm.id);
+	}
+	public void printFilm(){
+		System.out.println("Film ID: "+this.id+"---Film Name: "+this.name);
 	}
 }
