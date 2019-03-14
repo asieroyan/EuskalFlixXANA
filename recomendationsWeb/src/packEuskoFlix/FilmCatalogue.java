@@ -17,4 +17,11 @@ public class FilmCatalogue {
 	
 	//TODO
 	public void order() {}
+	public void add(Film film) {	
+		list.add(film);
+	}
+	
+	public void printFilms() {
+		System.out.println(list.print());
+	}
 }
