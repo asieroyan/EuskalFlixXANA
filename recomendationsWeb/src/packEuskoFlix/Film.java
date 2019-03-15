@@ -16,10 +16,10 @@ public class Film implements Comparable<Film>{
 
 	//TODO
 	public int compareTo(Film pFilm) {
-		return name.compareTo(pFilm.getName());
+		return name.compareTo(pFilm.name);
 	}
-	public String getName() {
-		return name;
+	public Integer getID() {
+		return this.id;
 	}
 	public int compareToByID(Film pFilm) {
 		return id.compareTo(pFilm.id);

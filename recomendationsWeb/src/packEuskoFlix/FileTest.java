@@ -7,7 +7,10 @@ public class FileTest {
 		MyFiles files = new MyFiles();
 		files.loadFilmCatalogue();
 		FilmCatalogue filmCatalogue = FilmCatalogue.getFilmCatalogue();
+		files.loadFilmRatings();
+		UserCatalogue userCatalogue = UserCatalogue.getUserCatalogue();
 		filmCatalogue.printFilms();
+		userCatalogue.printUsers();
 	}
 
 }

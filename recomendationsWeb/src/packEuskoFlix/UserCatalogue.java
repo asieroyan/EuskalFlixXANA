@@ -17,4 +17,10 @@ public class UserCatalogue {
 	
 	//TODO
 	public void initialize() {}
+	public void add(Integer pID,User pUser) {
+		this.list.add(pID,pUser);
+	}
+	public void printUsers() {
+		this.list.printUsers();
+	}
 }

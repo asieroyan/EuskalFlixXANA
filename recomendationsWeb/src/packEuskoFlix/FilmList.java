@@ -3,25 +3,32 @@ package packEuskoFlix;
 import java.util.HashMap;
 
 public class FilmList {
-	private HashMap<String,Film> list;
+	private HashMap<Integer,Film> list;
 	
 	public FilmList() {
-		this.list = new HashMap<String,Film>();
+		this.list = new HashMap<Integer,Film>();
 	}
 	
-	//TODO
 	public void add(Film pFilm) {
-		list.put(pFilm.getName(), pFilm);
+		list.put(pFilm.getID(), pFilm);
+	}
+	public void add(Integer pID,Film pFilm) {
+		//METODO PARA EVITAR UTILIZAR EL GETTER
+		if (!this.contains(pFilm)){
+			list.put(pID,pFilm);
+		}
 	}
 	
 	//TODO
 	public void remove(Film pFilm) {
-		list.remove(pFilm.getName());
+		if (this.contains(pFilm)) {
+			list.remove(pFilm.getID());
+		}
 	}
 	
 	//TODO
 	public boolean contains(Film pFilm) {
-		return list.containsKey(pFilm.getName());
+		return list.containsKey(pFilm.getID());
 	}
 	
 	public int size() {
@@ -35,6 +42,11 @@ public class FilmList {
 			myFilms[i].printFilm();
 		}
 		
+	}
+	public Film searchFilmByID(Integer pID) {
+		Film myFilm=null;
+		myFilm=this.list.get(pID);
+		return myFilm;
 	}
 	private void sortByID(Film[] myFilms) {
 		//METODO TEMPORAL PARA COMPROBAR QUE SE IMPORTAN BIEN LAS PELICULAS
