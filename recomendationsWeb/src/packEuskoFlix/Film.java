@@ -18,7 +18,7 @@ public class Film implements Comparable<Film>{
 
 	//TODO
 	public int compareTo(Film pFilm) {
-		return name.compareTo(pFilm.name);
+		return this.name.compareTo(pFilm.name);
 	}
 	public Integer getID() {
 		return this.id;
@@ -44,6 +44,5 @@ public class Film implements Comparable<Film>{
 		}
 		return text;
 	}
-	
 	
 }
