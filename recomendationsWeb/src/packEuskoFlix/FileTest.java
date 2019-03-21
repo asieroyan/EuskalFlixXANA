@@ -6,12 +6,12 @@ public class FileTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MyFiles files = MyFiles.getMyFiles();
-		files.loadFilmCatalogue();
+		
 		FilmCatalogue filmCatalogue = FilmCatalogue.getFilmCatalogue();
-		files.loadFilmRatings();
-		files.loadFilmTags();
+		filmCatalogue.loadFilmCatalogue();
 		UserCatalogue userCatalogue = UserCatalogue.getUserCatalogue();
+		userCatalogue.loadFilmRatings();
+		filmCatalogue.loadFilmTags();
 		//filmCatalogue.printFilms();
 		//userCatalogue.printUsers();		
 		Frame mainFrame = new Frame();
