@@ -16,19 +16,24 @@ public class Ratings{
 	
 	public static Ratings getRatings() {return myRatings;}
 	
-	public void addReview(Integer pFilmId, Integer pUserId, Double puntuation) {
-		HashMap<Integer,Double> aux = new HashMap<Integer,Double>();
-		if(ratingList.containsKey(pFilmId)) {
-			aux = ratingList.get(pFilmId);
-			if(!aux.containsKey(pUserId)) {
-				aux.put(pUserId,puntuation);
+	public void addReview(Integer pFilmId, Integer pUserId, Double pPuntuation) {
+		if (pPuntuation>5||pPuntuation<0.5) {
+			System.out.println("Puntuacion incorrecta");
+		}
+		else {
+			HashMap<Integer,Double> aux = new HashMap<Integer,Double>();
+			if(ratingList.containsKey(pFilmId)) {
+				aux = ratingList.get(pFilmId);
+				if(!aux.containsKey(pUserId)) {
+					aux.put(pUserId,pPuntuation);
+				}else {
+					aux.remove(pUserId);
+					aux.put(pUserId, pPuntuation);
+				}	
 			}else {
-				aux.remove(pUserId);
-				aux.put(pUserId, puntuation);
-			}	
-		}else {
-			aux.put(pUserId, puntuation);
-			ratingList.put(pFilmId, aux);
+				aux.put(pUserId, pPuntuation);
+				ratingList.put(pFilmId, aux);
+			}
 		}
 	}
 	public void printHashMap() {
