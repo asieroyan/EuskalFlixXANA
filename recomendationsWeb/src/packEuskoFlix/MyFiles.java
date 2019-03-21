@@ -7,12 +7,10 @@ import java.util.Scanner;
 
 public class MyFiles {
 	
-	private FilmCatalogue films = FilmCatalogue.getFilmCatalogue();
-	private UserCatalogue users= UserCatalogue.getUserCatalogue();
-
 	public MyFiles() {}
 	
 	public void loadFilmCatalogue() {
+		FilmCatalogue films = FilmCatalogue.getFilmCatalogue();
 		File file = new File(System.getProperty("user.dir"),"movie-titles.csv");
 		if(!file.exists()) {
 			System.out.println("File not found");
@@ -36,6 +34,7 @@ public class MyFiles {
 	}
 	
 	public void loadFilmRatings() {
+		UserCatalogue users= UserCatalogue.getUserCatalogue();
 		File file = new File(System.getProperty("user.dir"),"movie-ratings.csv");
 		if(!file.exists()) {
 			System.out.println("File not found");
@@ -62,6 +61,7 @@ public class MyFiles {
 	}
 	
 	public void loadFilmTags() {
+		FilmCatalogue films = FilmCatalogue.getFilmCatalogue();
 		File file = new File(System.getProperty("User.dir"),"movie-tags.csv");
 		if(!file.exists()) {
 			System.out.println("File not found");
