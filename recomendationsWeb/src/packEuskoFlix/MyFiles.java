@@ -1,6 +1,7 @@
 package packEuskoFlix;
 
 import java.io.File;
+import java.util.HashMap;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -33,6 +34,7 @@ public class MyFiles {
 			}
 		}
 	}
+	
 	public void loadFilmRatings() {
 		File file = new File(System.getProperty("user.dir"),"movie-ratings.csv");
 		if(!file.exists()) {
@@ -54,7 +56,30 @@ public class MyFiles {
 				Double rating= Double.parseDouble(v1[2]);
 				User user= new User(idUser);
 				users.add(idUser, user);
-				//FALTA AÑADIR LAS PUNTUACIONES
+				Ratings.getRatings().addReview(idFilm, idUser, rating);			
+			}
+		}
+	}
+	
+	public void loadFilmTags() {
+		File file = new File(System.getProperty("User.dir"),"movie-tags.csv");
+		if(!file.exists()) {
+			System.out.println("File not found");
+		}else {
+			Scanner sc = null;
+			try {
+				sc = new Scanner(file);
+			}catch(FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			String information;
+			String[] v1 = new String[2];     //the information split in two parts (film id/Tag)
+			while(sc.hasNext()) {
+				information = sc.nextLine();
+				v1 = information.split(";");
+				Integer idFilm=Integer.parseInt(v1[0]);
+				String tag= v1[1];
+				films.searchFilmByID(idFilm).addTag(tag);				
 			}
 		}
 	}

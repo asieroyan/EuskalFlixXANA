@@ -1,5 +1,7 @@
 package packEuskoFlix;
 
+import view.Frame;
+
 public class FileTest {
 
 	public static void main(String[] args) {
@@ -8,9 +10,12 @@ public class FileTest {
 		files.loadFilmCatalogue();
 		FilmCatalogue filmCatalogue = FilmCatalogue.getFilmCatalogue();
 		files.loadFilmRatings();
+		files.loadFilmTags();
 		UserCatalogue userCatalogue = UserCatalogue.getUserCatalogue();
-		filmCatalogue.printFilms();
-		userCatalogue.printUsers();
+		//filmCatalogue.printFilms();
+		//userCatalogue.printUsers();		
+		Frame mainFrame = new Frame();
+		mainFrame.setVisible(true);
 	}
 
 }

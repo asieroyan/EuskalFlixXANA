@@ -75,4 +75,21 @@ public class FilmList {
 		myFilms[right]=pivot;
 		return right;
 	}
+	
+	public HashMap<Integer,Film> getHashMap() {
+		return list;
+	}
+	
+	public Film getByName(String pName) {		
+		Film oneFilm;
+		Film[] myFilms=this.list.values().toArray(new Film[this.list.size()]);
+		int size=myFilms.length;
+		for (int i=0;i<size;i++) { 
+			oneFilm = myFilms[i];		
+			if (oneFilm.getName().equals(pName)) {
+				return oneFilm;
+			}
+		}
+		return null;		
+	}
 }

@@ -2,16 +2,18 @@ package packEuskoFlix;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class Film implements Comparable<Film>{
 	private String name;
 	private Integer id;
-	private Collection<Review> reviewList;
+	private ArrayList<String> tagList;
 	
 	public Film(String pName, Integer pId) {
 		this.name = pName;
 		this.id = pId;
-		reviewList = new ArrayList<Review>();
+		tagList = new ArrayList<String>();
 	}
 
 	//TODO
@@ -27,4 +29,21 @@ public class Film implements Comparable<Film>{
 	public void printFilm(){
 		System.out.println("Film ID: "+this.id+"---Film Name: "+this.name);
 	}
+	public void addTag(String pTag) {
+		tagList.add(pTag);
+	}	
+
+	public String getName() {
+		return name;
+	}
+	
+	public String allTags() {
+		String text = "";
+		for (int i = 0; i < tagList.size(); i++) {
+			text += tagList.get(i)+"\n";			
+		}
+		return text;
+	}
+	
+	
 }

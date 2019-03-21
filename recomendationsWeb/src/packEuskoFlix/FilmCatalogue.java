@@ -20,6 +20,7 @@ public class FilmCatalogue {
 	public void add(Film pFilm) {	
 		list.add(pFilm);
 	}
+	
 	public void add(Integer pID, Film pFilm) {
 		list.add(pID, pFilm);
 	}
@@ -29,8 +30,13 @@ public class FilmCatalogue {
 		System.out.println("--------------------------------------------------------------------------------------");
 		list.printFilms();
 	}
+	
 	public Film searchFilmByID(Integer pID) {
 		//DEVUELVE LA PELICULA, EN CASO DE NO ESTAR, DEVUELVE NULL
 		return(this.list.searchFilmByID(pID));
+	}
+	
+	public FilmList getList() {
+		return this.list;
 	}
 }
