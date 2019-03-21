@@ -6,9 +6,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MyFiles {
+	private static MyFiles mFiles= new MyFiles();
+	private MyFiles() {}
 	
-	public MyFiles() {}
-	
+	public static MyFiles getMyFiles() {
+		return mFiles;
+	}
 	public void loadFilmCatalogue() {
 		FilmCatalogue films = FilmCatalogue.getFilmCatalogue();
 		File file = new File(System.getProperty("user.dir"),"movie-titles.csv");
