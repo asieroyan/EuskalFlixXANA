@@ -69,5 +69,23 @@ public class Ratings{
 		
 		return text;
 		}
-	
+	private Iterator<Integer> filmsIterator(){
+		return (ratingList.keySet().iterator());
+	}
+	public HashMap<Integer,Double[]> RatingsInCommon(Integer pIDUser1, Integer pIDUser2) {
+		HashMap<Integer,Double[]> ratingsInCommon= new HashMap<Integer,Double[]>();
+		Iterator<Integer> itr= this.filmsIterator();
+		while (itr.hasNext()) {
+			Integer filmAct= itr.next();
+			if (ratingList.get(filmAct).containsKey(pIDUser1) && ratingList.get(filmAct).containsKey(pIDUser2)){
+				double valoracionUser1=ratingList.get(filmAct).get(pIDUser1);
+				double valoracionUser2=ratingList.get(filmAct).get(pIDUser2);
+				Double[] ratings= new Double[2];
+				ratings[0]=valoracionUser1;
+				ratings[1]=valoracionUser2;
+				ratingsInCommon.put(filmAct, ratings);
+			}
+		} //end of while
+		return ratingsInCommon;
+	}
 }

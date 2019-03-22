@@ -1,5 +1,8 @@
 package packEuskoFlix;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 public class User {
 	//private String name; PUEDE QUE HAYA QUE QUITARLO
 	private Integer id;
@@ -25,5 +28,28 @@ public class User {
 	}
 	public int compareTo(User pUser) {
 		return (this.id.compareTo(pUser.id));
+	}
+	private double cosUsers(HashMap<Integer,Double[]> pHash) {
+		double sumnum=0.0;
+		double den=0.0;
+		double sumvi=0.0;
+		double sumwi=0.0;
+		Iterator<Integer> itr=pHash.keySet().iterator();
+		while (itr.hasNext()) {
+			Integer idAct= itr.next();
+			Double[] ratings=pHash.get(idAct);
+			double vi=ratings[0].doubleValue();
+			double wi=ratings[1].doubleValue();
+			sumnum +=vi*wi;
+			sumvi+=vi*vi;
+			sumwi=wi*vi;
+		}
+		den=Math.sqrt(sumvi)*Math.sqrt(sumwi);
+		return sumnum/den;
+	}
+	private HashMap<Integer,Double[]> RatingsInCommon(User pUser) {
+		//SE OBTIENEN LAS PELICULAS EN COMUN ENTRE DOS USUARIOS CON SUS VALORACIONES
+		//EL HASHMAP ES TEMPORAL
+		return (Ratings.getRatings().RatingsInCommon(this.id, pUser.id));
 	}
 }
