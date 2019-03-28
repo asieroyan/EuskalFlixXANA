@@ -3,6 +3,7 @@ package packEuskoFlix;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Ratings{
 	
@@ -72,6 +73,69 @@ public class Ratings{
 	private Iterator<Integer> filmsIterator(){
 		return (ratingList.keySet().iterator());
 	}
+	public void normalize() {
+		double usercont=0;
+		double desvcont=0;
+		int contfilms=0;
+		HashMap<Integer,HashMap<Integer,Double>> newRatingList=new HashMap<Integer,HashMap<Integer,Double>>();
+		Iterator<Integer> idAllfilms=ratingList.keySet().iterator(); //recorre las peliculas
+		while (idAllfilms.hasNext()) {
+			int idFilm=idAllfilms.next();
+			
+				idMyFilms=ratingList.keySet().iterator(); //vuelvo a hacer el iterador de usuarios
+				while (idMyFilms.hasNext()) {
+					Integer idAct= idMyFilms.next();
+					HashMap<Integer,Double> userList=ratingList.get(idAct);
+					if (userList.containsKey(i)) {
+						desvcont+=Math.pow(userList.get(i)-median, 2);
+					}
+				} //fin while
+				double vardesv=Math.sqrt(desvcont/contfilms);
+				//System.out.println("Media usuario "+i+"= "+median);*/
+				usercont=0;
+				contfilms=0;
+			} //fin recorrer usuarios dentro de una pelicula
+			
+		} //fin recorrer peliculas
+		/*
+		for (int i=0;i<=6000;i++) {
+			Iterator<Integer> idMyFilms=ratingList.keySet().iterator();
+			while (idMyFilms.hasNext()) {
+				Integer idAct= idMyFilms.next();
+				HashMap<Integer,Double> userList=ratingList.get(idAct);
+				if (userList.containsKey(i)) {
+					usercont+=userList.get(i);
+					contfilms++;
+				}
+			}
+				double median= usercont/contfilms;
+				System.out.println("Media usuario "+i+"= "+median);
+				usercont=0;
+				contfilms=0;
+		} //fin del for
+			//System.out.println("Usuario "+i+" ha aparecido "+cont+"veces");
+		*/
+		ratingList=newRatingList;
+	}
+	private double getMedia(int pIDFilm) {
+		int usercont=0;
+		int contfilms=0;
+		HashMap<Integer,Double> filmHash=this.ratingList.get(pIDFilm);
+		Iterator<Integer> itr=filmHash.keySet().iterator(); //recorre los usuarios dentro de la pelicula
+		while (itr.hasNext()) {
+			int i= itr.next();
+			Iterator<Integer> idMyFilms=ratingList.keySet().iterator(); 
+			while (idMyFilms.hasNext()) { //calcula la media
+				Integer idAct= idMyFilms.next();
+				HashMap<Integer,Double> userList=ratingList.get(idAct);
+				if (userList.containsKey(i)) {
+					usercont+=userList.get(i);
+					contfilms++;
+				}
+			} //fin while
+			double median= usercont/contfilms; //media de un usuario
+			return median;
+		}
 	public HashMap<Integer,Double[]> RatingsInCommon(Integer pIDUser1, Integer pIDUser2) {
 		HashMap<Integer,Double[]> ratingsInCommon= new HashMap<Integer,Double[]>();
 		Iterator<Integer> itr= this.filmsIterator();
