@@ -9,9 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import packEuskoFlix.Film;
-import packEuskoFlix.FilmCatalogue;
-import packEuskoFlix.Ratings;
+import controler.Film;
+import controler.FilmCatalogue;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -60,61 +59,43 @@ public class Frame extends JFrame {
 		for (int i=0;i<size;i++) {
 			comboBox.addItem(myFilms[i].getName());
 		}
+		comboBox.setVisible(true);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnBuscar.setBounds(669, 90, 115, 29);
 		contentPane.add(btnBuscar);
 		
-		JScrollPane tagScrollPane = new JScrollPane();
-		tagScrollPane.setBounds(59, 393, 214, 270);
-		contentPane.add(tagScrollPane);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(123, 393, 709, 720);
+		contentPane.add(scrollPane);
 		
 		JTextArea ratings = new JTextArea();
 		ratings.setFont(new Font("Arial", Font.PLAIN, 16));
 		ratings.setColumns(10);
-		tagScrollPane.setViewportView(ratings);
+		scrollPane.setRowHeaderView(ratings);
 		
-		JLabel lblDatos = new JLabel("Ratings");
-		lblDatos.setFont(new Font("Arial", Font.BOLD, 15));
-		tagScrollPane.setColumnHeaderView(lblDatos);
-		
-		JTextArea users = new JTextArea();
-		users.setFont(new Font("Arial", Font.PLAIN, 16));
-		tagScrollPane.setRowHeaderView(users);
-		
-		JScrollPane RatingscrollPane = new JScrollPane();
-		RatingscrollPane.setBounds(289, 393, 655, 270);
-		contentPane.add(RatingscrollPane);
 		
 		JTextArea tags = new JTextArea();
-		tags.setBounds(0, 0, 210, 250);
 		tags.setFont(new Font("Arial", Font.PLAIN, 16));
-		RatingscrollPane.setViewportView(tags);
+		scrollPane.setViewportView(tags);
+		tags.setEditable(false);
 		
-		JLabel lblTags = new JLabel("Tags");
-		lblTags.setFont(new Font("Arial", Font.BOLD, 15));
-		RatingscrollPane.setColumnHeaderView(lblTags);
+		JLabel lblNewLabel = new JLabel("New label");
+		scrollPane.setColumnHeaderView(lblNewLabel);
 		
-		JLabel lblIdFilm = new JLabel("Id pelicula");
-		lblIdFilm.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
-		lblIdFilm.setBounds(669, 130, 115, 26);
-		contentPane.add(lblIdFilm);
-		
-
-		
+		JLabel lblDatos = new JLabel("Datos");
+		scrollPane.setColumnHeaderView(lblDatos);
 
 		
 		btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {//When buscar clicked            	
+            public void actionPerformed(ActionEvent arg0) {
             	String film = comboBox.getSelectedItem().toString();
             	//Search for the film
             	Film myFilm = FilmCatalogue.getFilmCatalogue().getList().getByName(film);            	
-            	Ratings myRatings = Ratings.getRatings();
+            	//To do
             	tags.setText(myFilm.allTags());
-            	ratings.setText(myRatings.allRatings(myFilm.getID()));
-            	users.setText(myRatings.allUsers(myFilm.getID()));
-            	lblIdFilm.setText(myFilm.getID().toString());
+            	ratings.setText(myFilm.allRatings());
             	
             };
 		});			
