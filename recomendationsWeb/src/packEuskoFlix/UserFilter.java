@@ -6,10 +6,12 @@ public class UserFilter {
 	public UserFilter() {
 	}
 	public Vector recommendedFilm(Integer pIdUser) {
+		//ESTE METODO DEVUELVE LA LISTA DE LAS 10 PELICULAS QUE MAS LE PUEDE GUSTAR A UN USUARIO
 		Matrix films= this.getEstimatedRatings(pIdUser);
 		return (films.getSecondKeySortedByValues(pIdUser, 10)); //obtiene las 10 peliculas que mas pueden gustar a un usuario
 	}
 	private Matrix getEstimatedRatings(Integer pIdUser) {
+		//ESTE METODO CONSIGUE LAS VALORACIONES QUE ESTIMAMOS QUE DARIA UN USUARIO A LAS PELICULAS QUE NO HA VISTO
 		RatingCatalogue ratingList=RatingCatalogue.getRatingCatalogue();
 		Matrix estimatedRatings= new Matrix(); //USER FILM RATINGESTIMATED
 		Vector nonViewFilms= ratingList.getNonViewFilmsFor(pIdUser);
@@ -24,6 +26,7 @@ public class UserFilter {
 		return estimatedRatings;
 	}
 	private Double getEstimatedValorationForFilm(Integer pIdUser,Integer pFilm) {
+		//ESTE METODO CALCULA LA VALORACION QUE ESTIMAMOS QUE DARIA UN USUARIO A UNA PELICULA EN CONCRETO
 		Double estimatedValoration=0.0;
 		RatingCatalogue ratingList=RatingCatalogue.getRatingCatalogue();
 		Matrix similitudeMatrix= this.calculateNSimilarUsers(pIdUser, 30, pFilm); //valor 30 por defecto
@@ -43,6 +46,7 @@ public class UserFilter {
 		return estimatedValoration;
 	}
 	private Matrix calculateNSimilarUsers(Integer pIdUser, Integer pN, Integer pFilm) {
+		//ESTE METODO CALCULA LOS N USUARIOS MAS SIMILARES AL USUARIO DEL QUE QUEREMOS SABER LA VALORACION ESTIMADA, ADEMAS ESTOS USUARIOS HAN TENIDO QUE PUNTUAR LA PELICULA QUE QUEREMOS ESTIMAR
 		Matrix similitudes=this.calculateSimilitudeWithOtherUsers(pIdUser);
 		Matrix similitudesFiltered= this.obtainMatrixWhoHasValuedFilm(pIdUser, pFilm, similitudes);
 		Matrix nSimilitude=similitudesFiltered.getMatrixWithSecondKeySortedByValues(pIdUser, pN);
@@ -62,7 +66,8 @@ public class UserFilter {
 		}
 		return newMatrix;
 	}
-	private Matrix calculateSimilitudeWithOtherUsers(Integer pIdUser) {
+	private Matrix calculateSimilitudeWithOtherUsers(Integer pIdUser) { 
+		//ESTE METODO CALCULA LA MATRIZ DE SIMILITUD DE UN USUARIO CON EL RESTO DE USUARIOS
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
 		Vector users=ratings.getAllUsers();
 		Iterator<Integer> itr=users.iterator();
@@ -76,7 +81,8 @@ public class UserFilter {
 		}
 		return similitudeMatrix;
 	}
-	public Double calculateSimilitude( Integer pId1, Integer pId2) { //calcula la similitud entre dos usuarios
+	private Double calculateSimilitude( Integer pId1, Integer pId2) { 
+		///ESTE METODO CALCULA LA SIMILITUD DE UN USUARIO CON OTRO USUARIO CONCRETO
 		//System.out.println("Usuario1-Usuario2"+pId1+"   "+pId2);
 		Vector filmsInCommon= this.filmsInCommon(pId1, pId2); //consigo las peliculas en comun
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
@@ -102,6 +108,7 @@ public class UserFilter {
 	}
 	
 	private Vector filmsInCommon(Integer pId1, Integer pId2) {
+		//ESTE METODO CONSIGUE LAS PELICULAS QUE HAN VOTADO EN COMUN UN USUARIO CON OTRO CONCRETO
 		Vector films= new Vector();
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
 		Vector user1films=ratings.getFilmsFromUser(pId1); //obtengo las peliculas de usuario1
