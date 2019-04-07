@@ -21,8 +21,8 @@ public class FileTest {
 		double tiemporecomendacion=cronometro.elapsedTime();
 		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);
 		//UserFilter filter= new UserFilter();
-		//filter.calculateSimilitude(22048, 4230);
-		
+	//	filter.calculateSimilitude(1, 3);
+		//filter.getEstimatedValorationForFilm(1,3);
 	}
 
 }

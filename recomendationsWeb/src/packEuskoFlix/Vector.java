@@ -77,6 +77,7 @@ public class Vector implements Iterable<Integer>{
 		int i=0;
 		while (itr.hasNext()) {
 			System.out.println("Element "+i+" = "+itr.next());
+			i++;
 		}
 	}
 }

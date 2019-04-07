@@ -9,9 +9,12 @@ public class RatingCatalogue {
 	private static RatingCatalogue mRatingCatalogue;
 	private Matrix ratingMatrix;
 	private UserFilter valorationMode; //posible strategy
+	private NormalizeMode normalizeMode; //PATRON STRATEGY
+	
 	private RatingCatalogue() {
 		this.ratingMatrix = new Matrix();
 		this.valorationMode= new UserFilter();
+		this.normalizeMode=new NormalizeByMedian(); //por defecto normaliza mediante la media
 	}
 	public static RatingCatalogue getRatingCatalogue() {
 		if (mRatingCatalogue == null) {
@@ -72,11 +75,8 @@ public class RatingCatalogue {
 	}
 	
 	public Vector getFilmsFromUser(int pIDUser) {
+		
 		return(this.ratingMatrix.getSecondKeyList(pIDUser));
-	}
-	
-	private Double getMean (int pIdUser) {
-		return 0.0;
 	}
 	public double getValoration(Integer pUser, Integer pFilm) {
 		double valoration=0.0;
@@ -84,6 +84,9 @@ public class RatingCatalogue {
 			valoration=this.ratingMatrix.getValue(pUser, pFilm);
 		}
 		return valoration;
+	}
+	public Matrix getMatrix() {
+		return this.ratingMatrix;
 	}
 	public Vector getAllUsers() {
 		return(this.ratingMatrix.getFirstKeyList());
@@ -97,5 +100,11 @@ public class RatingCatalogue {
 	}
 	public boolean hasValorated(int pIdUser, int pIdFilm) {
 		return (this.ratingMatrix.containsKeys(pIdUser, pIdFilm));
+	}
+	public Matrix normalizeMatrix() {
+		return(this.normalizeMode.normalizeMatrix());
+	}
+	public Matrix unNormalizeMatrix(int pIdUser,Matrix pMatrix) {
+		return(this.normalizeMode.unNormalizeMatrix(pIdUser, pMatrix));
 	}
 }

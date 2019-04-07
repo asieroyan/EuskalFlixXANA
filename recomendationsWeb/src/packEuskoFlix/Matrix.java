@@ -42,12 +42,17 @@ public class Matrix {
 	}
 	public Vector getSecondKeyList(int pFirstKey) {
 		Vector secondKeys= new Vector();
-		Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
-		secondKeys.addIntegerSet(myKeys);//SE AÑADE EL ARRAYLIST AL VECTOR
+		if (this.containsFirstKey(pFirstKey)){
+			Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
+			secondKeys.addIntegerSet(myKeys);//SE AÑADE EL ARRAYLIST AL VECTOR
+		}
 		return secondKeys;
 	}
 	public Double getValue(int pFirstKey, int pSecondKey) {
 		return matrix.get(pFirstKey).get(pSecondKey);
+	}
+	public void changeValue(Integer pUser, Integer pFilm, double pValue) {
+		matrix.get(pUser).replace(pFilm, pValue);
 	}
 	public Vector getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
 		Vector keys= new Vector();
@@ -95,7 +100,9 @@ public class Matrix {
 			System.out.println("User: "+act+"    Value"+this.getValue(pIdUser, act));
 		}
 	}
+
 	
+
 }
 
 
