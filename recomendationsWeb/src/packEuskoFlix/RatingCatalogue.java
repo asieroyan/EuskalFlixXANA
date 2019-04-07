@@ -8,9 +8,10 @@ import java.util.Scanner;
 public class RatingCatalogue {
 	private static RatingCatalogue mRatingCatalogue;
 	private Matrix ratingMatrix;
-	
+	private UserFilter valorationMode; //posible strategy
 	private RatingCatalogue() {
 		this.ratingMatrix = new Matrix();
+		this.valorationMode= new UserFilter();
 	}
 	public static RatingCatalogue getRatingCatalogue() {
 		if (mRatingCatalogue == null) {
@@ -55,7 +56,7 @@ public class RatingCatalogue {
 	
 	private void divideLineAdd(String pInformation) {
 		String[] v1 = new String[3];
-		v1 = pInformation.split(";");
+		v1 = pInformation.split(",");
 		Integer idUser=Integer.parseInt(v1[0]);
 		Integer idFilm=Integer.parseInt(v1[1]);
 		Double rate = Double.parseDouble(v1[2]);
@@ -66,9 +67,8 @@ public class RatingCatalogue {
 		ratingMatrix.addData(pUserId, pFilmId, pRank);
 	}
 	
-	public Film recommendFilm(int pId) {
-		Film a = new Film(1,"a");
-		return a;
+	public Vector recommendFilm(int pId) {
+		return(this.valorationMode.recommendedFilm(pId));
 	}
 	
 	public Vector getFilmsFromUser(int pIDUser) {
@@ -77,5 +77,25 @@ public class RatingCatalogue {
 	
 	private Double getMean (int pIdUser) {
 		return 0.0;
+	}
+	public double getValoration(Integer pUser, Integer pFilm) {
+		double valoration=0.0;
+		if (this.ratingMatrix.containsKeys(pUser, pFilm)){
+			valoration=this.ratingMatrix.getValue(pUser, pFilm);
+		}
+		return valoration;
+	}
+	public Vector getAllUsers() {
+		return(this.ratingMatrix.getFirstKeyList());
+	}
+	public Vector getNonViewFilmsFor(int pIdUser) {
+		Vector films= new Vector();
+		Vector allfilms=FilmCatalogue.getFilmCatalogue().getAllFilms();
+		Vector userFilms=ratingMatrix.getSecondKeyList(pIdUser);
+		films= allfilms.getNonCommonValuesWith(userFilms);
+		return films;
+	}
+	public boolean hasValorated(int pIdUser, int pIdFilm) {
+		return (this.ratingMatrix.containsKeys(pIdUser, pIdFilm));
 	}
 }

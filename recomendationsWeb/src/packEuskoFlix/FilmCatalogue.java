@@ -1,7 +1,9 @@
 package packEuskoFlix;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -98,5 +100,12 @@ public class FilmCatalogue {
 		}
 		
 		
+	}
+	public Vector getAllFilms() {	
+		Vector allfilms= new Vector();
+		Set<Integer> films=this.list.keySet();
+		//ArrayList<Integer> films=(ArrayList<Integer>) this.list.keySet();
+		allfilms.addIntegerSet(films);
+		return allfilms;
 	}
 }
