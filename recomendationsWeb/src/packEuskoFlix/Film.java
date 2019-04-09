@@ -21,5 +21,9 @@ public class Film {
 			tags.put(pTagString,1);
 		}
 	}
+	
+	public boolean containsTag(String tag) {
+		return this.tags.containsKey(tag);
+	}
 
 }
