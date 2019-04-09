@@ -31,8 +31,7 @@ public class FilmCatalogue {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}			
-		}		
-			
+		}	
 			//the information split in two parts
 			while(sc.hasNext()) {
 				information = sc.nextLine();

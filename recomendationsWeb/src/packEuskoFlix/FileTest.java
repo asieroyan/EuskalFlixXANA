@@ -1,6 +1,6 @@
 package packEuskoFlix;
 
-import view.Frame;
+//import view.Frame;
 
 public class FileTest {
 

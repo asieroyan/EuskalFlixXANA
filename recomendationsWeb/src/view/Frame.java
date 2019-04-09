@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controler.Film;
-import controler.FilmCatalogue;
+import packEuskoFlix.Film;
+import packEuskoFlix.FilmCatalogue;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;

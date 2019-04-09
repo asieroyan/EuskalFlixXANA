@@ -27,7 +27,7 @@ public class NormalizeByMedian implements NormalizeMode {
 		}
 	}
 	private double userMedian(int pIdUser) {
-		double median=0.0;;
+		double median=0.0;
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
 		Vector films=ratings.getFilmsFromUser(pIdUser);
 		int cant=films.size();

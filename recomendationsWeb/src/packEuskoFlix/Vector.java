@@ -39,7 +39,7 @@ public class Vector implements Iterable<Integer>{
 		//compruebo las peliculas comunes
 		Iterator<Integer> itr=this.getIterador();
 		while (itr.hasNext()) {
-			Integer act= itr.next();
+			int act= itr.next();
 			if (pVector2.contains(act)) {
 				common.add(act);
 			}
@@ -49,23 +49,14 @@ public class Vector implements Iterable<Integer>{
 	public int size() {
 		return this.vector.size();
 	}
-	public Integer getInPos(int pPos) {
-		//DEVUELVE EL ELEMENTO EN LA POSICION pPos (si no existe devuelve null)
-		Integer elem=null;
-		if (pPos<this.size()) {
-			elem=this.vector.get(pPos);
-		}
-		return elem;
-	}
 	public Iterator<Integer> iterator() {
-		VectorIterator itr= new VectorIterator(this);
-		return itr;
+		return vector.iterator();
 	}
 	public Vector getNonCommonValuesWith(Vector pVector) {
 		Vector nonCommon= new Vector();
 		Iterator<Integer> itr=this.getIterador();
 		while (itr.hasNext()) {
-			Integer act= itr.next();
+			int act= itr.next();
 			if (!pVector.contains(act)) { //valor distinto
 				nonCommon.add(act);
 			}
@@ -77,6 +68,7 @@ public class Vector implements Iterable<Integer>{
 		int i=0;
 		while (itr.hasNext()) {
 			System.out.println("Element "+i+" = "+itr.next());
+			i++;
 		}
 	}
 }

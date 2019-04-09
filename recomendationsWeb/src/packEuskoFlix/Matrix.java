@@ -3,11 +3,10 @@ package packEuskoFlix;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 public class Matrix {
-	private HashMap<Integer, HashMap<Integer, Double>> matrix; //UserId, FilmId, rating
+	private HashMap<Integer, HashMap<Integer, Double>> matrix;
 	
 	public Matrix() {
 		this.matrix = new HashMap<Integer, HashMap<Integer, Double>>();
@@ -44,11 +43,14 @@ public class Matrix {
 	public Vector getSecondKeyList(int pFirstKey) {
 		Vector secondKeys= new Vector();
 		Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
-		secondKeys.addIntegerSet(myKeys);//SE Aï¿½ADE EL ARRAYLIST AL VECTOR
+		secondKeys.addIntegerSet(myKeys);//SE AÑADE EL ARRAYLIST AL VECTOR
 		return secondKeys;
 	}
 	public Double getValue(int pFirstKey, int pSecondKey) {
 		return matrix.get(pFirstKey).get(pSecondKey);
+	}
+	public void changeValue(Integer pUser, Integer pFilm, double pValue) {
+		matrix.get(pUser).replace(pFilm, pValue);
 	}
 	public Vector getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
 		Vector keys= new Vector();
@@ -96,18 +98,9 @@ public class Matrix {
 			System.out.println("User: "+act+"    Value"+this.getValue(pIdUser, act));
 		}
 	}
+
 	
-	public double getMean(int pUserId) {
-		HashMap<Integer, Double> aux = this.matrix.get(pUserId);
-		Double suma = 0.0;
-		int cont = 0;
-		for (Map.Entry<Integer, Double> entry : aux.entrySet()) {
-			suma = suma + entry.getValue();
-			cont = cont+1;
-		}
-		return suma/cont;
-	}
-	
+
 }
 
 
