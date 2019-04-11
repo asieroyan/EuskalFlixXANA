@@ -6,7 +6,7 @@ public class NormalizeByMedian implements NormalizeMode {
 	public Matrix normalizeMatrix() {
 		Matrix normalizedMatrix= new Matrix();
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
-		Vector user=ratings.getAllUsers(); //lista de todos los usuarios
+		VectorInteger user=ratings.getAllUsers(); //lista de todos los usuarios
 		Iterator<Integer> itr=user.iterator();
 		while (itr.hasNext()) {
 			Integer userAct=itr.next();
@@ -17,7 +17,7 @@ public class NormalizeByMedian implements NormalizeMode {
 	private void normalizeUserRatings(int pIdUser, Matrix pMatrix) {
 		double median=this.userMedian(pIdUser);
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
-		Vector films=ratings.getFilmsFromUser(pIdUser);
+		VectorInteger films=ratings.getFilmsFromUser(pIdUser);
 		Iterator<Integer> itr=films.iterator();
 		while (itr.hasNext()) {
 			Integer filmAct=itr.next();
@@ -29,7 +29,7 @@ public class NormalizeByMedian implements NormalizeMode {
 	private double userMedian(int pIdUser) {
 		double median=0.0;
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
-		Vector films=ratings.getFilmsFromUser(pIdUser);
+		VectorInteger films=ratings.getFilmsFromUser(pIdUser);
 		int cant=films.size();
 		Iterator<Integer> itr=films.iterator();
 		while (itr.hasNext()) {
@@ -41,7 +41,7 @@ public class NormalizeByMedian implements NormalizeMode {
 	}
 	public Matrix unNormalizeMatrix(int pIdUser,Matrix pMatrix) {
 		double median=this.userMedian(pIdUser);
-		Vector filmList=pMatrix.getSecondKeyList(pIdUser);
+		VectorInteger filmList=pMatrix.getSecondKeyList(pIdUser);
 		Iterator<Integer> itr=filmList.iterator();
 		while (itr.hasNext()) {
 			Integer act= itr.next();

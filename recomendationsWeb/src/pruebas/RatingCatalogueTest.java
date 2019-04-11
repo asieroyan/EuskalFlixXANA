@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import packEuskoFlix.EuskoFlix;
 import packEuskoFlix.RatingCatalogue;
-import packEuskoFlix.Vector;
+import packEuskoFlix.VectorInteger;
 
 public class RatingCatalogueTest {
 
@@ -20,15 +20,21 @@ public class RatingCatalogueTest {
 
 	@Test
 	public void testRecommendFilm() {
+		System.out.println("--------------------------------------------");
+		System.out.println("PRUEBA RECOMENDAR UNA PELICULA PARA EL USUARIO 2048");
+		System.out.println("--------------------------------------------");
 		EuskoFlix.getEuskoFlix().initialize();
-		Vector vector1 = RatingCatalogue.getRatingCatalogue().recommendFilm(2048);
+		VectorInteger vector1 = RatingCatalogue.getRatingCatalogue().recommendFilm(2048);
 		vector1.printVector();
 	}
 
 	@Test
 	public void testGetFilmsFromUser() {
+		System.out.println("--------------------------------------------");
+		System.out.println("PRUEBA IMPRIMIR PELICULAS DE USUARIO1");
+		System.out.println("--------------------------------------------");
 		EuskoFlix.getEuskoFlix().initialize();
-		Vector vector1 = RatingCatalogue.getRatingCatalogue().getFilmsFromUser(1);
+		VectorInteger vector1 = RatingCatalogue.getRatingCatalogue().getFilmsFromUser(1);
 		vector1.printVector();
 	}
 
@@ -43,15 +49,21 @@ public class RatingCatalogueTest {
 
 	@Test
 	public void testGetAllUsers() {
+		System.out.println("--------------------------------------------");
+		System.out.println("PRUEBA IMPRIMIR LOS ID DE TODOS LOS USUARIOS");
+		System.out.println("--------------------------------------------");
 		EuskoFlix.getEuskoFlix().initialize();
-		Vector vector1 = RatingCatalogue.getRatingCatalogue().getAllUsers();
+		VectorInteger vector1 = RatingCatalogue.getRatingCatalogue().getAllUsers();
 		vector1.printVector();
 	}
 
 	@Test
 	public void testGetNonViewFilmsFor() {
+		System.out.println("--------------------------------------------");
+		System.out.println("PRUEBA MOSTRAR PELICULAS NO VISTAS POR USUARIO1");
+		System.out.println("--------------------------------------------");
 		EuskoFlix.getEuskoFlix().initialize();
-		Vector vector1 = RatingCatalogue.getRatingCatalogue().getNonViewFilmsFor(1);
+		VectorInteger vector1 = RatingCatalogue.getRatingCatalogue().getNonViewFilmsFor(1);
 		vector1.printVector();
 	}
 

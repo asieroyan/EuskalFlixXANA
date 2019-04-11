@@ -34,28 +34,35 @@ public class Matrix {
 		}
 		return contains;
 	}
-	public Vector getFirstKeyList() {
-		Vector firstKeys= new Vector();
+	public VectorInteger getFirstKeyList() {
+		VectorInteger firstKeys= new VectorInteger();
 		Set<Integer> myKeys=this.matrix.keySet(); //OBTENGO LAS KEYS
 		firstKeys.addIntegerSet(myKeys);
 		return firstKeys;
 	}
-	public Vector getSecondKeyList(int pFirstKey) {
-		Vector secondKeys= new Vector();
-		Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
-		secondKeys.addIntegerSet(myKeys);//SE AÑADE EL ARRAYLIST AL VECTOR
+	public VectorInteger getSecondKeyList(int pFirstKey) {
+		VectorInteger secondKeys= new VectorInteger();
+		if (this.matrix.containsKey(pFirstKey)){
+			Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
+			secondKeys.addIntegerSet(myKeys);//SE ANADE EL ARRAYLIST AL VECTOR
+		}
 		return secondKeys;
 	}
 	public Double getValue(int pFirstKey, int pSecondKey) {
-		return matrix.get(pFirstKey).get(pSecondKey);
+		if (this.containsKeys(pFirstKey, pSecondKey)){
+			return matrix.get(pFirstKey).get(pSecondKey);
+		}
+		else {
+			return 0.0; //si no hay devuelve 0.0
+		}
 	}
 	public void changeValue(Integer pUser, Integer pFilm, double pValue) {
 		matrix.get(pUser).replace(pFilm, pValue);
 	}
-	public Vector getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
-		Vector keys= new Vector();
+	public VectorInteger getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
+		VectorInteger keys= new VectorInteger();
 		int i=0;
-		Vector myKeys=this.getSecondKeyList(pFirstKey);
+		VectorInteger myKeys=this.getSecondKeyList(pFirstKey);
 		while (myKeys.size()>0 && i<pNumKeys) { //mientras la lista no sea vacia y no se alcancen el numero de keys
 			int keyId=this.getMaxValueKey(pFirstKey, myKeys); //obtiene la id de la key con mayor value
 			keys.add(keyId);
@@ -67,27 +74,29 @@ public class Matrix {
 	public Matrix getMatrixWithSecondKeySortedByValues(int pFirstKey,int pNumKeys) {
 		Matrix sortedMatrix= new Matrix();
 		int i=0;
-		Vector myKeys=this.getSecondKeyList(pFirstKey);
-		while (myKeys.size()>0 && i<pNumKeys) { 
-			int keyId=this.getMaxValueKey(pFirstKey, myKeys);
-			double value=this.getValue(pFirstKey, keyId);
-			sortedMatrix.addData(pFirstKey, keyId, value);
-			i++;
-			myKeys.delete(keyId); //lo borro de la lista
-		}
+		if (this.containsFirstKey(pFirstKey)){
+			VectorInteger myKeys=this.getSecondKeyList(pFirstKey);
+			while (myKeys.size()>0 && i<pNumKeys) { 
+				int keyId=this.getMaxValueKey(pFirstKey, myKeys);
+				double value=this.getValue(pFirstKey, keyId);
+				sortedMatrix.addData(pFirstKey, keyId, value);
+				i++;
+				myKeys.delete(keyId); //lo borro de la lista
+				}
+			}
 		return sortedMatrix;
 	}
-	public int getMaxValueKey(int pFirstKey,Vector pSecondKeyList) { //devuelve la segunda key del mayor valor
+	public int getMaxValueKey(int pFirstKey,VectorInteger pSecondKeyList) { //devuelve la segunda key del mayor valor
 		Iterator<Integer> itr=pSecondKeyList.iterator();
 		double maxvalue=0.0;
-		int maxkey=0;
+		int maxkey=-1;
 		while (itr.hasNext()) {
 			int useract= itr.next();
 			double valueact=this.getValue(pFirstKey, useract);
-			if (valueact>maxvalue) {
+			if (valueact>=maxvalue) {
 				maxvalue=valueact;
 				maxkey=useract;
-			} //
+			} 
 		}
 		return maxkey;
 	}
@@ -98,8 +107,6 @@ public class Matrix {
 			System.out.println("User: "+act+"    Value"+this.getValue(pIdUser, act));
 		}
 	}
-
-	
 
 }
 

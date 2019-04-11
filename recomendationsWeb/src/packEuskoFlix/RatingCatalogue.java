@@ -8,13 +8,13 @@ import java.util.Scanner;
 public class RatingCatalogue {
 	private static RatingCatalogue mRatingCatalogue;
 	private Matrix ratingMatrix;
-	private UserFilter valorationMode; //posible strategy
+	private FilterMode valorationMode; //posible strategy
 	private NormalizeMode normalizeMode; //PATRON STRATEGY
 	
 	private RatingCatalogue() {
 		this.ratingMatrix = new Matrix();
 		this.valorationMode= new UserFilter();
-		this.normalizeMode=new NormalizeByMedian(); //por defecto normaliza mediante la media
+		this.normalizeMode=new NonNormalized(); //por defecto no normaliza
 		this.initialize();
 	}
 	public static RatingCatalogue getRatingCatalogue() {
@@ -23,7 +23,7 @@ public class RatingCatalogue {
 		}
 		return mRatingCatalogue;
 	}
-	
+
 	public void initialize() {
 		File file = new File(System.getProperty("user.dir"),"movie-ratings.csv");
 		String information;
@@ -71,12 +71,11 @@ public class RatingCatalogue {
 		ratingMatrix.addData(pUserId, pFilmId, pRank);
 	}
 	
-	public Vector recommendFilm(int pId) {
-		this.valorationMode.normalizeMatrix();
+	public VectorInteger recommendFilm(int pId) {
 		return(this.valorationMode.recommendedFilm(pId));
 	}
 	
-	public Vector getFilmsFromUser(int pIDUser) {
+	public VectorInteger getFilmsFromUser(int pIDUser) {
 		return(this.ratingMatrix.getSecondKeyList(pIDUser));
 	}
 	public double getValoration(Integer pUser, Integer pFilm) {
@@ -89,13 +88,13 @@ public class RatingCatalogue {
 	public Matrix getMatrix() {
 		return this.ratingMatrix;
 	}
-	public Vector getAllUsers() {
+	public VectorInteger getAllUsers() {
 		return(this.ratingMatrix.getFirstKeyList());
 	}
-	public Vector getNonViewFilmsFor(int pIdUser) {
-		Vector films= new Vector();
-		Vector allfilms=FilmCatalogue.getFilmCatalogue().getAllFilms();
-		Vector userFilms=ratingMatrix.getSecondKeyList(pIdUser);
+	public VectorInteger getNonViewFilmsFor(int pIdUser) {
+		VectorInteger films= new VectorInteger();
+		VectorInteger allfilms=FilmCatalogue.getFilmCatalogue().getAllFilms();
+		VectorInteger userFilms=ratingMatrix.getSecondKeyList(pIdUser);
 		films= allfilms.getNonCommonValuesWith(userFilms);
 		return films;
 	}
@@ -107,5 +106,23 @@ public class RatingCatalogue {
 	}
 	public Matrix unNormalizeMatrix(int pIdUser,Matrix pMatrix) {
 		return(this.normalizeMode.unNormalizeMatrix(pIdUser, pMatrix));
+	}
+	public void changeNormalizeMode() { //Cambia el modo de normalizar
+		//SI ESTA EN NORMALIZACION POR MEDIA CAMBIA A SIN NORMALIZAR
+		//SI ESTA EN SIN NORMALIZAR CAMBIA A NORMALIZACION POR MEDIA
+		if (this.normalizeMode instanceof NonNormalized) {
+			this.normalizeMode=new NormalizeByMedian();
+		}
+		else if (this.normalizeMode instanceof NormalizeByMedian) {
+			this.normalizeMode=new NonNormalized();
+		}
+	}
+	public void changeValorationMode() { //Cambia el modo de valorar
+		if (this.valorationMode instanceof UserFilter) {
+			this.valorationMode=new ProductFilter();
+		}
+		else if (this.valorationMode instanceof ProductFilter) {
+			this.valorationMode=new UserFilter();
+		}
 	}
 }

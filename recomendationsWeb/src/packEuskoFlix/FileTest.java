@@ -17,12 +17,11 @@ public class FileTest {
 		double tiempocarga=cronometro.elapsedTime();
 		System.out.println("Tiempo en cargar= "+tiempocarga);
 		cronometro= new Stopwatch();
-		Vector recommends=ratings.recommendFilm(2048);
+		ratings.changeNormalizeMode(); //Cambia a normalizar
+		//ratings.changeValorationMode(); //Cambia a ProductFilter
+		VectorInteger recommends=ratings.recommendFilm(2048);
 		double tiemporecomendacion=cronometro.elapsedTime();
-		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);
-		//UserFilter filter= new UserFilter();
-		//filter.calculateSimilitude(22048, 4230);
-		
+		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);	
 	}
 
 }

@@ -55,7 +55,7 @@ public class MatrixTest {
 		matrix1.addData(5,1 , 4.0);
 		matrix1.addData(7,2 , 3.0);
 		matrix1.addData(1,3 , 3.5);
-		packEuskoFlix.Vector vector1 = matrix1.getFirstKeyList();
+		packEuskoFlix.VectorInteger vector1 = matrix1.getFirstKeyList();
 		vector1.printVector();
 	}
 
@@ -69,7 +69,7 @@ public class MatrixTest {
 		matrix1.addData(5,1 , 4.0);
 		matrix1.addData(7,2 , 3.0);
 		matrix1.addData(1,3 , 3.5);
-		packEuskoFlix.Vector vector1 = matrix1.getFirstKeyList();
+		packEuskoFlix.VectorInteger vector1 = matrix1.getFirstKeyList();
 		vector1.printVector();
 	}
 
@@ -90,7 +90,7 @@ public class MatrixTest {
 		matrix1.addData(5,1 , 4.0);
 		matrix1.addData(7,2 , 3.0);
 		matrix1.addData(1,3 , 3.5);
-		packEuskoFlix.Vector vector1 = matrix1.getFirstKeyList();
+		packEuskoFlix.VectorInteger vector1 = matrix1.getFirstKeyList();
 		vector1.printVector();
 	}
 
@@ -118,16 +118,6 @@ public class MatrixTest {
 		matrix1.addData(5,1 , 4.0);
 		matrix1.addData(7,2 , 3.0);
 		matrix1.addData(1,3 , 3.5);
-	}
-
-	@Test
-	public void testGetMean() {
-		Matrix matrix1 = new Matrix();
-		matrix1.addData(3,5 , 3.5);
-		matrix1.addData(3,1 , 4.0);
-		matrix1.addData(3,2 , 3.0);
-		matrix1.addData(3,3 , 3.5);
-		assertEquals(matrix1.getMean(3),3.5, 0);
 	}
 
 }
