@@ -65,6 +65,10 @@ public class RatingCatalogue {
 		Integer idFilm=Integer.parseInt(v1[1]);
 		Double rate = Double.parseDouble(v1[2]);
 		addOneLine(idUser, idFilm, rate);
+		//CALCULOS EXTRA PARA EL PRODUCTFILTER
+		if (this.valorationMode instanceof ProductFilter) {
+			((ProductFilter) this.valorationMode).addUsersWhoHasValorated(idFilm, idUser);
+		}
 	}
 	
 	private void addOneLine(int pUserId, int pFilmId,double pRank) {

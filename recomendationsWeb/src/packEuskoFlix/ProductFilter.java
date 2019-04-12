@@ -86,21 +86,20 @@ public class ProductFilter extends FilterMode {
 	}
 	private Vector obtainUserWhoHasValorated(Integer pFilm) {
 		Vector user= new Vector();
-		if (!this.filmUsers.containsKey(pFilm)){
-			RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
-			Vector users=ratings.getAllUsers();
-			Iterator<Integer> itr=users.iterator();
-			while (itr.hasNext()) {
-				int useract=itr.next();
-				if (ratings.hasValorated(useract, pFilm)) {
-					user.add(useract);
-				}
-			}
-			this.filmUsers.put(pFilm, user);
-		}
-		else {
+		if (this.filmUsers.containsKey(pFilm)) {
 			user=this.filmUsers.get(pFilm);
 		}
 		return user;
+	}
+	public void addUsersWhoHasValorated(int pFilm, int pUser) {
+		if (this.filmUsers.containsKey(pFilm)) {
+			this.filmUsers.get(pFilm).add(pUser);
+		}
+		else {
+			Vector filmUser= new Vector();
+			filmUser.add(pUser);
+			this.filmUsers.put(pFilm, filmUser);
+		}
+		
 	}
 }
