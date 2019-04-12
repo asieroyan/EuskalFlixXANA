@@ -9,7 +9,7 @@ public class UserFilter extends FilterMode {
 		//ESTE METODO CALCULA LA VALORACION QUE ESTIMAMOS QUE DARIA UN USUARIO A UNA PELICULA EN CONCRETO
 		Double estimatedValoration=0.0;
 		Matrix similitudeMatrix= this.calculateNSimilars(pIdUser, 30, pFilm); //valor 30 por defecto
-		VectorInteger similitudes=similitudeMatrix.getSecondKeyList(pIdUser); //lista de similitudes del usuario con los demas
+		Vector similitudes=similitudeMatrix.getSecondKeyList(pIdUser); //lista de similitudes del usuario con los demas
 		Iterator<Integer> users=similitudes.iterator(); //lista de usuarios
 		Double sumNum=0.0;
 		Double sumDem=0.0;
@@ -29,10 +29,10 @@ public class UserFilter extends FilterMode {
 		Matrix nSimilitude=similitudes.getMatrixWithSecondKeySortedByValues(pIdUser, pN);
 		return nSimilitude;
 	}
-	private VectorInteger obtainUsersWhoHasValuedFilm(int pIdUser, int pFilm) { //obtiene el vector con los usuarios que han visto la pelicula
-		VectorInteger userVector= new VectorInteger();
+	private Vector obtainUsersWhoHasValuedFilm(int pIdUser, int pFilm) { //obtiene el vector con los usuarios que han visto la pelicula
+		Vector userVector= new Vector();
 		RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
-		VectorInteger listUsers=ratings.getAllUsers();
+		Vector listUsers=ratings.getAllUsers();
 		Iterator<Integer> itr=listUsers.iterator(); //los recorro
 		while (itr.hasNext()) {
 			Integer userAct=itr.next();
@@ -44,7 +44,7 @@ public class UserFilter extends FilterMode {
 	}
 	private Matrix calculateSimilitudeWithOtherUsers(Integer pIdUser, Integer pFilm) { 
 		//ESTE METODO CALCULA LA MATRIZ DE SIMILITUD DE UN USUARIO CON EL RESTO DE USUARIOS QUE HAN VISTO CIERTA PELICULA
-		VectorInteger users=this.obtainUsersWhoHasValuedFilm(pIdUser, pFilm);
+		Vector users=this.obtainUsersWhoHasValuedFilm(pIdUser, pFilm);
 		Iterator<Integer> itr=users.iterator();
 		Matrix similitudeMatrix= new Matrix();
 		while (itr.hasNext()) {
@@ -57,7 +57,7 @@ public class UserFilter extends FilterMode {
 	}
 	private Double calculateSimilitude( Integer pId1, Integer pId2) { 
 		///ESTE METODO CALCULA LA SIMILITUD DE UN USUARIO CON OTRO USUARIO CONCRETO
-		VectorInteger filmsVector=this.getFilmsFromBothUsers(pId1,pId2);
+		Vector filmsVector=this.getFilmsFromBothUsers(pId1,pId2);
 		Double sumNum=0.0; //guarda el sumatorio del numerador
 		Double dem1=0.0; //guarda la primera raiz del denominador
 		Double dem2=0.0; //guarda la segunda raiz del denominador
@@ -77,10 +77,10 @@ public class UserFilter extends FilterMode {
 		similitud=sumNum/sumDem;	
 		return similitud;
 	}
-	private VectorInteger getFilmsFromBothUsers(Integer pId1, Integer pId2) {
+	private Vector getFilmsFromBothUsers(Integer pId1, Integer pId2) {
 		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
-		VectorInteger filmsUser1=ratings.getFilmsFromUser(pId1);
-		VectorInteger filmsUser2=ratings.getFilmsFromUser(pId2);
+		Vector filmsUser1=ratings.getFilmsFromUser(pId1);
+		Vector filmsUser2=ratings.getFilmsFromUser(pId2);
 		filmsUser1.addvaluesFromVector(filmsUser2);
 		return filmsUser1;
 	}

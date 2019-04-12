@@ -71,11 +71,11 @@ public class RatingCatalogue {
 		ratingMatrix.addData(pUserId, pFilmId, pRank);
 	}
 	
-	public VectorInteger recommendFilm(int pId) {
+	public Vector recommendFilm(int pId) {
 		return(this.valorationMode.recommendedFilm(pId));
 	}
 	
-	public VectorInteger getFilmsFromUser(int pIDUser) {
+	public Vector getFilmsFromUser(int pIDUser) {
 		return(this.ratingMatrix.getSecondKeyList(pIDUser));
 	}
 	public double getValoration(Integer pUser, Integer pFilm) {
@@ -88,13 +88,13 @@ public class RatingCatalogue {
 	public Matrix getMatrix() {
 		return this.ratingMatrix;
 	}
-	public VectorInteger getAllUsers() {
+	public Vector getAllUsers() {
 		return(this.ratingMatrix.getFirstKeyList());
 	}
-	public VectorInteger getNonViewFilmsFor(int pIdUser) {
-		VectorInteger films= new VectorInteger();
-		VectorInteger allfilms=FilmCatalogue.getFilmCatalogue().getAllFilms();
-		VectorInteger userFilms=ratingMatrix.getSecondKeyList(pIdUser);
+	public Vector getNonViewFilmsFor(int pIdUser) {
+		Vector films= new Vector();
+		Vector allfilms=FilmCatalogue.getFilmCatalogue().getAllFilms();
+		Vector userFilms=ratingMatrix.getSecondKeyList(pIdUser);
 		films= allfilms.getNonCommonValuesWith(userFilms);
 		return films;
 	}

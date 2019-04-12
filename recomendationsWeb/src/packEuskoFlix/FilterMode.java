@@ -7,11 +7,11 @@ public abstract class FilterMode {
 	public FilterMode() {
 		this.NMatrix= new Matrix();
 	}
-	public VectorInteger recommendedFilm(Integer pIdUser) {
+	public Vector recommendedFilm(Integer pIdUser) {
 		//ESTE METODO DEVUELVE LA LISTA DE LAS 10 PELICULAS QUE MAS LE PUEDE GUSTAR A UN USUARIO
 		this.normalizeMatrix();
 		Matrix films= this.getEstimatedRatings(pIdUser);
-		VectorInteger filmsRecommended= films.getSecondKeySortedByValues(pIdUser, 10); //obtiene las 10 peliculas que mas pueden gustar a un usuario
+		Vector filmsRecommended= films.getSecondKeySortedByValues(pIdUser, 10); //obtiene las 10 peliculas que mas pueden gustar a un usuario
 		filmsRecommended.printVector();
 		return filmsRecommended; 
 	}
@@ -33,7 +33,7 @@ public abstract class FilterMode {
 		//ESTE METODO CONSIGUE LAS VALORACIONES QUE ESTIMAMOS QUE DARIA UN USUARIO A LAS PELICULAS QUE NO HA VISTO
 		RatingCatalogue ratingList=RatingCatalogue.getRatingCatalogue();
 		Matrix estimatedRatings= new Matrix(); //USER FILM RATINGESTIMATED
-		VectorInteger nonViewFilms= ratingList.getNonViewFilmsFor(pIdUser);
+		Vector nonViewFilms= ratingList.getNonViewFilmsFor(pIdUser);
 		Iterator<Integer> itr=nonViewFilms.iterator(); //lista de peliculas no vistas
 		while (itr.hasNext()) {
 			//recorro las peliculas no vistas

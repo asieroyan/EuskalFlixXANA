@@ -19,7 +19,7 @@ public class FileTest {
 		cronometro= new Stopwatch();
 		ratings.changeNormalizeMode(); //Cambia a normalizar
 		//ratings.changeValorationMode(); //Cambia a ProductFilter
-		VectorInteger recommends=ratings.recommendFilm(2048);
+		Vector recommends=ratings.recommendFilm(2048);
 		double tiemporecomendacion=cronometro.elapsedTime();
 		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);	
 	}

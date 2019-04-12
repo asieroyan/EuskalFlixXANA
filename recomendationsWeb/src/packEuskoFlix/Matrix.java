@@ -34,14 +34,14 @@ public class Matrix {
 		}
 		return contains;
 	}
-	public VectorInteger getFirstKeyList() {
-		VectorInteger firstKeys= new VectorInteger();
+	public Vector getFirstKeyList() {
+		Vector firstKeys= new Vector();
 		Set<Integer> myKeys=this.matrix.keySet(); //OBTENGO LAS KEYS
 		firstKeys.addIntegerSet(myKeys);
 		return firstKeys;
 	}
-	public VectorInteger getSecondKeyList(int pFirstKey) {
-		VectorInteger secondKeys= new VectorInteger();
+	public Vector getSecondKeyList(int pFirstKey) {
+		Vector secondKeys= new Vector();
 		if (this.matrix.containsKey(pFirstKey)){
 			Set<Integer> myKeys=this.matrix.get(pFirstKey).keySet(); //OBTENGO LAS KEYS
 			secondKeys.addIntegerSet(myKeys);//SE ANADE EL ARRAYLIST AL VECTOR
@@ -59,10 +59,10 @@ public class Matrix {
 	public void changeValue(Integer pUser, Integer pFilm, double pValue) {
 		matrix.get(pUser).replace(pFilm, pValue);
 	}
-	public VectorInteger getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
-		VectorInteger keys= new VectorInteger();
+	public Vector getSecondKeySortedByValues(int pFirstKey, int pNumKeys) {
+		Vector keys= new Vector();
 		int i=0;
-		VectorInteger myKeys=this.getSecondKeyList(pFirstKey);
+		Vector myKeys=this.getSecondKeyList(pFirstKey);
 		while (myKeys.size()>0 && i<pNumKeys) { //mientras la lista no sea vacia y no se alcancen el numero de keys
 			int keyId=this.getMaxValueKey(pFirstKey, myKeys); //obtiene la id de la key con mayor value
 			keys.add(keyId);
@@ -75,7 +75,7 @@ public class Matrix {
 		Matrix sortedMatrix= new Matrix();
 		int i=0;
 		if (this.containsFirstKey(pFirstKey)){
-			VectorInteger myKeys=this.getSecondKeyList(pFirstKey);
+			Vector myKeys=this.getSecondKeyList(pFirstKey);
 			while (myKeys.size()>0 && i<pNumKeys) { 
 				int keyId=this.getMaxValueKey(pFirstKey, myKeys);
 				double value=this.getValue(pFirstKey, keyId);
@@ -86,7 +86,7 @@ public class Matrix {
 			}
 		return sortedMatrix;
 	}
-	public int getMaxValueKey(int pFirstKey,VectorInteger pSecondKeyList) { //devuelve la segunda key del mayor valor
+	public int getMaxValueKey(int pFirstKey,Vector pSecondKeyList) { //devuelve la segunda key del mayor valor
 		Iterator<Integer> itr=pSecondKeyList.iterator();
 		double maxvalue=0.0;
 		int maxkey=-1;

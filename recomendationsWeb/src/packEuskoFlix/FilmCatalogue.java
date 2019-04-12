@@ -100,8 +100,8 @@ public class FilmCatalogue {
 		
 		
 	}
-	public VectorInteger getAllFilms() {	
-		VectorInteger allfilms= new VectorInteger();
+	public Vector getAllFilms() {	
+		Vector allfilms= new Vector();
 		Set<Integer> films=this.list.keySet();
 		//ArrayList<Integer> films=(ArrayList<Integer>) this.list.keySet();
 		allfilms.addIntegerSet(films);

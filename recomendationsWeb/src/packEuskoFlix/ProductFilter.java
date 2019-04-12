@@ -4,17 +4,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class ProductFilter extends FilterMode {
-	private HashMap<Integer,VectorInteger> filmUsers;
+	private HashMap<Integer,Vector> filmUsers;
 	public ProductFilter() {
 		super();
-		filmUsers=new HashMap<Integer,VectorInteger>();
+		filmUsers=new HashMap<Integer,Vector>();
 	}
 	public Double getEstimatedValorationForFilm(Integer pIdUser,Integer pFilm) {
 		//ESTE METODO CALCULA LA VALORACION QUE ESTIMAMOS QUE DARIA UN USUARIO A UNA PELICULA EN CONCRETO
 		Double estimatedValoration=0.0;
 		//RatingCatalogue ratingList=RatingCatalogue.getRatingCatalogue();
 		Matrix similitudeMatrix= this.calculateNSimilars(pIdUser, 20, pFilm); //valor 20 por defecto
-		VectorInteger similitudes=similitudeMatrix.getSecondKeyList(pFilm); //lista de similitudes del usuario con los demas
+		Vector similitudes=similitudeMatrix.getSecondKeyList(pFilm); //lista de similitudes del usuario con los demas
 		Iterator<Integer> films=similitudes.iterator(); //lista de peliculas
 		Double sumNum=0.0;
 		Double sumDem=0.0;
@@ -38,7 +38,7 @@ public class ProductFilter extends FilterMode {
 		System.out.println(pFilm);
 		//ESTE METODO CALCULA LA MATRIZ DE SIMILITUD DE UNA PELICULA CON EL RESTO DE PELICULAS DE UN USUARIO
 		RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
-		VectorInteger films=ratings.getFilmsFromUser(pIdUser); //consigo las peliculas de ese usuario
+		Vector films=ratings.getFilmsFromUser(pIdUser); //consigo las peliculas de ese usuario
 		Iterator<Integer> itr=films.iterator();
 		Matrix similitudeMatrix= new Matrix();
 		while (itr.hasNext()) {
@@ -57,7 +57,7 @@ public class ProductFilter extends FilterMode {
 		///ESTE METODO CALCULA LA SIMILITUD DE UNA PELICULA CON OTRA PELICULA
 		//System.out.println("Usuario1-Usuario2"+pId1+"   "+pId2);
 		Double similitud=0.0;
-		VectorInteger users=this.getUsersFromBothFilms(pFilm1, pFilm2);
+		Vector users=this.getUsersFromBothFilms(pFilm1, pFilm2);
 		//RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
 		Double sumNum=0.0; //guarda el sumatorio del numerador
 		Double sumDem=0.0; //guarda el sumatorio del denominador
@@ -78,17 +78,17 @@ public class ProductFilter extends FilterMode {
 				//System.out.println("Similitud="+similitud);
 		return similitud;
 	}
-	private VectorInteger getUsersFromBothFilms(Integer pId1, Integer pId2) {
-		VectorInteger filmsUser1=this.obtainUserWhoHasValorated(pId1);
-		VectorInteger filmsUser2=this.obtainUserWhoHasValorated(pId2);
+	private Vector getUsersFromBothFilms(Integer pId1, Integer pId2) {
+		Vector filmsUser1=this.obtainUserWhoHasValorated(pId1);
+		Vector filmsUser2=this.obtainUserWhoHasValorated(pId2);
 		filmsUser1.addvaluesFromVector(filmsUser2);
 		return filmsUser1;
 	}
-	private VectorInteger obtainUserWhoHasValorated(Integer pFilm) {
-		VectorInteger user= new VectorInteger();
+	private Vector obtainUserWhoHasValorated(Integer pFilm) {
+		Vector user= new Vector();
 		if (!this.filmUsers.containsKey(pFilm)){
 			RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
-			VectorInteger users=ratings.getAllUsers();
+			Vector users=ratings.getAllUsers();
 			Iterator<Integer> itr=users.iterator();
 			while (itr.hasNext()) {
 				int useract=itr.next();
