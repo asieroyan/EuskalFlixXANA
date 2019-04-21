@@ -78,4 +78,16 @@ public class VectorString implements Iterable<String>{
 			i++;
 		}
 	}
+	
+	public int calculateStringAparitions(String pString) {
+		Iterator<String> itr = this.getIterador();
+		int cont = 0;
+		while (itr.hasNext()) {
+			String act = itr.next();
+			if (act == pString) {
+				cont++;
+			}
+		}
+		return cont;
+	}
 }

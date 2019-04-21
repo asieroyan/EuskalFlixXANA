@@ -78,4 +78,8 @@ public class Vector implements Iterable<Integer>{
 			i++;
 		}
 	}
+	
+	public boolean contains(int pElem) {
+		return this.vector.contains(pElem);
+	}
 }
