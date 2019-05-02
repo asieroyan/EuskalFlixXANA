@@ -38,7 +38,6 @@ public class RatingCatalogue {
 				e.printStackTrace();
 			}			
 		}		
-			
 			//the information split in two parts
 			while(sc.hasNext()) {
 				information = sc.nextLine();
