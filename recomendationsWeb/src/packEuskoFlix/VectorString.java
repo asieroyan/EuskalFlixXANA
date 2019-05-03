@@ -16,7 +16,7 @@ public class VectorString{
 			vector.add(pId);
 		}
 	}
-	public void addIntegerSet(Set<String> array) {
+	public void addStringSet(Set<String> array) {
 		Iterator<String> itr= array.iterator();
 		while (itr.hasNext()) {
 			String act= itr.next();
@@ -31,7 +31,7 @@ public class VectorString{
 	private Iterator<String> getIterador(){
 		return this.vector.iterator();
 	}
-	private boolean contains(String pValue) {
+	public boolean contains(String pValue) {
 		return vector.contains(pValue);
 	}
 	public void addvaluesFromVector(VectorString pVector2) { //ANADE LOS VALORES QUE NO TIENE DEL OTRO VECTOR

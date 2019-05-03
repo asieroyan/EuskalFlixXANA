@@ -5,13 +5,16 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ContentFilter extends FilterMode {
-	private HashMap<Integer, String> tags;
-	private VectorString lista;
+	private ModelMatrix productModel; //lo generamos
+	private ModelMatrix userModel; //lo generamos
+	//private VectorString lista;
 	public ContentFilter() {
 		super();
-		this.tags= new HashMap<Integer,String>();
+		this.productModel= new ModelMatrix();
+	    this.userModel= new ModelMatrix();
 	}
 	public void divideLineAdd(String pInformation) { //posible optimizacion
 		String[] v1 = new String[3];
@@ -20,86 +23,103 @@ public class ContentFilter extends FilterMode {
 		Integer idFilm=Integer.parseInt(v1[1]);
 		Double rate = Double.parseDouble(v1[2]);
 		RatingCatalogue.getRatingCatalogue().addOneLine(idUser, idFilm, rate);
-		//consigo los tags
-		this.getTags();
+	}
+	public Matrix getEstimatedRatings(Integer pIdUser) {
+		this.calculateProductModel();
+		//System.out.println(this.productModel.getValue(5503, "tvtfid"));
+		this.calculateUserModel(pIdUser);
+		//int i=1;
+		//ESTE METODO CONSIGUE LAS VALORACIONES QUE ESTIMAMOS QUE DARIA UN USUARIO A LAS PELICULAS QUE NO HA VISTO
+		RatingCatalogue ratingList=RatingCatalogue.getRatingCatalogue();
+		Matrix estimatedRatings= new Matrix(); //USER FILM RATINGESTIMATED
+		VectorInteger nonViewFilms= ratingList.getNonViewFilmsFor(pIdUser);
+		Iterator<Integer> itr=nonViewFilms.iterator(); //lista de peliculas no vistas
+		while (itr.hasNext()) {
+			//recorro las peliculas no vistas
+			//System.out.println("ITERACION "+i);
+			Integer filmAct= itr.next();
+			double estimatedRating=this.getEstimatedValorationForFilm(pIdUser, filmAct);
+			estimatedRatings.addData(pIdUser, filmAct, estimatedRating);
+			//i++;
+		}
+		//estimatedRatings=this.unNormalizeMatrix(pIdUser, estimatedRatings);
+		estimatedRatings.print(pIdUser);
+		return estimatedRatings;
 	}
 	public Double getEstimatedValorationForFilm(Integer pIdUser, Integer pFilm) {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("Pelicula "+pFilm);
+		VectorString filmTags=this.getTagsForFilm(pFilm);
+		//System.out.println(filmTags.size());
+		VectorString userTags=this.userModel.getTagList(pIdUser);
+		//System.out.println(userTags.size());
+		userTags.addvaluesFromVector(filmTags);
+		//System.out.println(userTags.size());
+		Double sumNum=0.0; //guarda el sumatorio del numerador
+		Double dem1=0.0; //guarda la primera raiz del denominador
+		Double dem2=0.0; //guarda la segunda raiz del denominador
+		Double sumDem=dem1*dem2; //guarda el sumatorio del denominador
+		Double similitud=0.0;
+		Iterator<String> itr=userTags.iterator();
+		while (itr.hasNext()) {
+			String tagAct= itr.next();
+			//System.out.println(tagAct);
+			Double valoration1=this.userModel.getValue(pIdUser, tagAct);
+			Double valoration2=this.productModel.getValue(pFilm, tagAct);
+			//System.out.println(valoration1);
+			//System.out.println(valoration2);
+			Double num=valoration1*valoration2;
+			sumNum+=num;
+			dem1+=Math.pow(valoration1, 2);
+			dem2+=Math.pow(valoration2, 2);
+			}
+		sumDem= (Math.sqrt(dem1))*(Math.sqrt(dem2));
+		similitud=sumNum/sumDem;	
+		return similitud;
 	}
 
-	public Matrix calculateNSimilars(Integer pIdUser, Integer pN, Integer pFilm) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	private void getTags() {
-		File file = new File(System.getProperty("user.dir"),"movie-tags.csv");
-		String information;
-		Scanner sc = null;
-		if (correctFile(file)) {
-			try {
-				sc = new Scanner(file);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-		}
-		//the information split in two parts
-			while(sc.hasNext()) {
-				information = sc.nextLine();
-				Integer filmId = this.getFilmIdFromLine(information);
-				String tag = this.getTagFromLine(information);
-				tags.put(filmId, tag);		
-		}
-			sc.close();
-	}
-	private Integer getFilmIdFromLine(String pLine){
-		String[] v1 = new String[2];
-		v1 = pLine.split(";");
-		Integer idFilm=Integer.parseInt(v1[0]);
-		return idFilm;
-	}
-	
-	private String getTagFromLine(String pLine) {
-		String[] v1 = new String[2];
-		v1 = pLine.split(";");
-		String tag = v1[1];
-		return tag;
-	}
-	private boolean correctFile(File pFile) {
-		if(!pFile.exists()) {
-			System.out.println("File not found");
-			return false;
-		}
-		else 
-		{
-			return true;			
-		}
-	}
-	private ModelMatrix calculateProductModel() {
-		ModelMatrix productModel= new ModelMatrix();
+	private void calculateProductModel() {
+		//CALCULA EL MODELO DE PRODUCTO
+		//ModelMatrix productModel= new ModelMatrix();
 		VectorInteger films=FilmCatalogue.getFilmCatalogue().getAllFilms();
 		Iterator<Integer> itr= films.iterator();
 		while (itr.hasNext()) {
 			int filmAct=itr.next();
-			this.addFilmModel(filmAct, productModel);
+			this.addFilmToModel(filmAct);
 		}
-		return productModel;
+		//return productModel;
 		
 	}
-	private ModelMatrix addFilmModel(int pFilm, ModelMatrix pProductModel) {
-		VectorString filmtags= this.getTagsForFilm(pFilm);
+	private void addFilmToModel(int pFilm) {
+		VectorString filmtags= new VectorString();
+		filmtags= this.getTagsForFilm(pFilm);
 		Iterator<String> itr= filmtags.iterator();
+		//System.out.println(pFilm);
 		while (itr.hasNext()) {
 			String tagAct= itr.next();
 			double tfidf=this.tagImportanceInFilm(pFilm, tagAct);
-			pProductModel.add(pFilm, tagAct, tfidf);
+			System.out.println("Film= "+pFilm+"tag= "+tagAct+"tfid= "+tfidf);
+			this.productModel.add(pFilm, tagAct, tfidf);
 		}
-		return pProductModel;
 	}
-	private ModelMatrix calculateUserModel() {
-		//todo
-		return null;
+	private void calculateUserModel(int pIdUser) {
+		//CALCULAMOS EL MODELO DE PERSONA
+		RatingCatalogue ratings= RatingCatalogue.getRatingCatalogue();
+		VectorInteger films=ratings.getFilmsWithMorePuntuation(pIdUser, 3.5); //coge las peliculas a las que les ha votado mas de 3.5
+		Iterator<Integer> itr= films.iterator();
+		//HACEMOS LAS SUMAS
+		while (itr.hasNext()) { //recorremos las peliuculas
+			int filmAct= itr.next();
+			VectorString tags=this.getTagsForFilm(filmAct);
+			this.sumTagForUser(pIdUser, filmAct, tags);
+		}	
+	}
+	private void sumTagForUser(int pIdUser, int pFilm, VectorString pTags) {
+		Iterator<String> itr=pTags.iterator();
+		while (itr.hasNext()) {
+			String tagAct= itr.next();
+			double filmtf=this.productModel.getValue(pFilm, tagAct);
+			this.userModel.sumValue(pIdUser, tagAct, filmtf);
+		}
 		
 	}
 	private Double tagImportanceInFilm(int pFilmId, String pTag) {
@@ -108,38 +128,25 @@ public class ContentFilter extends FilterMode {
 		int filmsNum = FilmCatalogue.getFilmCatalogue().getAllFilms().size();
 		int filmsWithThisTag = this.getFilmNumWithTag(pTag);
 		Double output = tagAparitions * Math.log((filmsNum)/(filmsWithThisTag));
-		System.out.println(output);
 		return output;
 	}
 	
 	private int tagAparitionsInFilm(int pFilmId, String pTag) {
-		VectorString filmVector = this.getTagsForFilm(pFilmId);
-		return this.tagAparitionsInVector(filmVector, pTag);
+		TagCatalogue tags= TagCatalogue.getTagCatalogue();
+		return(tags.getTagAparitions(pFilmId, pTag));
 	}
 	private VectorString getTagsForFilm(int pFilmId) {
-		VectorString tagVector= new VectorString();
-		tags.forEach((filmId,tag) ->{
-			if (filmId == pFilmId) {
-				tagVector.add(tag);
-			}
-		});
-		return tagVector;
+		TagCatalogue tags= TagCatalogue.getTagCatalogue();
+		return (tags.getTagsForFilm(pFilmId));
 	}
 	
-	private int tagAparitionsInVector(VectorString pVector, String pTag) {
-		return pVector.calculateStringAparitions(pTag);
-	}
 	private VectorInteger getFilmsWithTag(String pTag) {
-		VectorInteger filmsWithTag = new VectorInteger();
-		tags.forEach((filmId,tag) ->{
-			if (tag == pTag) {
-				filmsWithTag.add(filmId);
-			}
-		});
-		return filmsWithTag;
+		TagCatalogue tags= TagCatalogue.getTagCatalogue();
+		return(tags.getFilmsWithTag(pTag));
 	}
 	
 	private int getFilmNumWithTag(String pTag) {
+		//TagCatalogue tags= TagCatalogue.getTagCatalogue();
 		return getFilmsWithTag(pTag).size();
 	}
 

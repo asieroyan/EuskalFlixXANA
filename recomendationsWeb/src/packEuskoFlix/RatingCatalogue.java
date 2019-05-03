@@ -13,7 +13,7 @@ public class RatingCatalogue {
 	
 	private RatingCatalogue() {
 		this.ratingMatrix = new Matrix();
-		this.valorationMode= new UserFilter();
+		this.valorationMode= new ContentFilter();
 		this.normalizeMode=new NonNormalized(); //por defecto no normaliza
 	}
 	public static RatingCatalogue getRatingCatalogue() {
@@ -65,6 +65,10 @@ public class RatingCatalogue {
 	}
 	public Matrix unNormalizeMatrix(int pIdUser,Matrix pMatrix) {
 		return(this.normalizeMode.unNormalizeMatrix(pIdUser, pMatrix));
+	}
+	public VectorInteger getFilmsWithMorePuntuation(int pIdUser, double pValoration) {
+		//CONSIGUE LAS PELICULAS DE UN USUARIO QUE LES HA DADO UNA VALORACION MAYOR O IGUAL A pValoration
+		return(this.ratingMatrix.getSecondKeyWithMoreValue(pIdUser, pValoration));
 	}
 	public void changeNormalizeMode() { //Cambia el modo de normalizar
 		//SI ESTA EN NORMALIZACION POR MEDIA CAMBIA A SIN NORMALIZAR

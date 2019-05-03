@@ -82,5 +82,5 @@ public abstract class FilterMode {
 		return estimatedRatings;
 	}
 	public abstract Double getEstimatedValorationForFilm(Integer pIdUser,Integer pFilm);
-	public abstract Matrix calculateNSimilars(Integer pIdUser, Integer pN, Integer pFilm);
+	//public abstract Matrix calculateNSimilars(Integer pIdUser, Integer pN, Integer pFilm);
 }

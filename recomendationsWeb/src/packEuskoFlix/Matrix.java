@@ -107,7 +107,21 @@ public class Matrix {
 			System.out.println("User: "+act+"    Value"+this.getValue(pIdUser, act));
 		}
 	}
-
+	public VectorInteger getSecondKeyWithMoreValue(int pFirstKey, double pValue) {
+		VectorInteger secondKeys= new VectorInteger();
+		if (this.containsFirstKey(pFirstKey)){
+			VectorInteger myKeys=this.getSecondKeyList(pFirstKey);
+			Iterator<Integer> itr=myKeys.iterator(); //recorremos las segundas keys
+			while (itr.hasNext()) {
+				int secondKeyAct= itr.next();
+				double value=this.getValue(pFirstKey, secondKeyAct);
+				if (value>=pValue) {
+					secondKeys.add(secondKeyAct);
+				}
+			} //fin while
+		} //fin if
+		return secondKeys;
+	}
 }
 
 

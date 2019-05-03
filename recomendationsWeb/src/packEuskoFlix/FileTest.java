@@ -13,11 +13,13 @@ public class FileTest {
 		filmCatalogue.initializeTitles();
 		RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
 		ratings.initialize();
+		TagCatalogue tags=TagCatalogue.getTagCatalogue();
+		tags.initialize();
 		double tiempocarga=cronometro.elapsedTime();
 		System.out.println("Tiempo en cargar= "+tiempocarga);
 		cronometro= new Stopwatch();
-		ratings.changeNormalizeMode(); //Cambia a normalizar
-		ratings.changeValorationMode(); //Cambia a ProductFilter
+		//ratings.changeNormalizeMode(); //Cambia a normalizar
+		//ratings.changeValorationMode(); //Cambia a ProductFilter
 		VectorInteger recommends=ratings.recommendFilm(2048);
 		double tiemporecomendacion=cronometro.elapsedTime();
 		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);	
