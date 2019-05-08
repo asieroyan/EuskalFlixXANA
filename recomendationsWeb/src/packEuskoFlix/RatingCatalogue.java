@@ -8,21 +8,22 @@ import java.util.Scanner;
 public class RatingCatalogue {
 	private static RatingCatalogue mRatingCatalogue;
 	private Matrix ratingMatrix;
-	private FilterMode valorationMode; //posible strategy
+	private FilterMode valorationMode; //PATRON STRATEGY
 	private NormalizeMode normalizeMode; //PATRON STRATEGY
 	
 	private RatingCatalogue() {
 		this.ratingMatrix = new Matrix();
-		this.valorationMode= new ContentFilter();
+		this.valorationMode= new UserFilter();
 		this.normalizeMode=new NonNormalized(); //por defecto no normaliza
 	}
 	public static RatingCatalogue getRatingCatalogue() {
 		if (mRatingCatalogue == null) {
 			mRatingCatalogue = new RatingCatalogue();
+			mRatingCatalogue.initialize();
 		}
 		return mRatingCatalogue;
 	}
-	public void initialize() {
+	private void initialize() {
 		this.ratingMatrix= new Matrix(); //resetea la matriz
 		this.valorationMode.initialize(); //la inicializa
 	}
@@ -31,6 +32,8 @@ public class RatingCatalogue {
 	}
 	
 	public VectorInteger recommendFilm(int pId) {
+		//Devuelve el vector con el Id de las peliculas que se le recomienda a un usuario segun
+		//el metodo que se quiera
 		return(this.valorationMode.recommendedFilm(pId));
 	}
 	
@@ -38,6 +41,7 @@ public class RatingCatalogue {
 		return(this.ratingMatrix.getSecondKeyList(pIDUser));
 	}
 	public double getValoration(Integer pUser, Integer pFilm) {
+		//Devuelve la valoracion que le ha dado un usuario a una pelicula. Si no la ha valorado devuelve 0
 		double valoration=0.0;
 		if (this.ratingMatrix.containsKeys(pUser, pFilm)){
 			valoration=this.ratingMatrix.getValue(pUser, pFilm);
@@ -80,13 +84,25 @@ public class RatingCatalogue {
 			this.normalizeMode=new NonNormalized();
 		}
 	}
-	public void changeValorationMode() { //Cambia el modo de valorar
-		if (this.valorationMode instanceof UserFilter) {
-			this.valorationMode=new ProductFilter();
+	public void changeValorationMode(String pMode) { //Cambia el modo de valorar
+		//Si se introduce cualquier otro valor que no sea correcto el programa no hace nada
+		if (pMode.equalsIgnoreCase("UserFilter")){
+			if (!(this.valorationMode instanceof UserFilter)){
+			this.valorationMode= new UserFilter();
+			this.initialize();
+			}
 		}
-		else if (this.valorationMode instanceof ProductFilter) {
-			this.valorationMode=new UserFilter();
+		else if (pMode.equalsIgnoreCase("ProductFilter")){
+			if (!(this.valorationMode instanceof ProductFilter)){
+			this.valorationMode= new ProductFilter();
+			this.initialize();
+			}
 		}
-		this.initialize();
+		else if (pMode.equalsIgnoreCase("ContentFilter")){
+			if (!(this.valorationMode instanceof ContentFilter)){
+			this.valorationMode= new ContentFilter();
+			this.initialize();
+			}
+		}
 	}
 }

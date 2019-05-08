@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public abstract class FilterMode {
-	private Matrix NMatrix;
+	private Matrix NMatrix; //matriz propia del metodo de filtrado (normalizada o no normalizada)
 	public FilterMode() {
 		this.NMatrix= new Matrix();
 	}
@@ -31,9 +31,9 @@ public abstract class FilterMode {
 		}
 			sc.close();
 	}
-	public abstract void divideLineAdd(String pInformation);
+	public abstract void divideLineAdd(String pInformation); //distintas implementaciones
 	
-	private boolean correctFile(File pFile) {
+	private boolean correctFile(File pFile) { //comprueba que los ficheros sean correctos
 		if(!pFile.exists()) {
 			System.out.println("File not found");
 			return false;
@@ -48,7 +48,6 @@ public abstract class FilterMode {
 		this.normalizeMatrix();
 		Matrix films= this.getEstimatedRatings(pIdUser);
 		VectorInteger filmsRecommended= films.getSecondKeySortedByValues(pIdUser, 10); //obtiene las 10 peliculas que mas pueden gustar a un usuario
-		filmsRecommended.printVector();
 		return filmsRecommended; 
 	}
 	
@@ -56,6 +55,7 @@ public abstract class FilterMode {
 		this.NMatrix=RatingCatalogue.getRatingCatalogue().normalizeMatrix();
 	}
 	public double getValoration(Integer pUser, Integer pFilm) {
+		//Obtiene la valoracion de la matriz normalizada o sin normalizar
 		double valoration=0.0;
 		if (this.NMatrix.containsKeys(pUser, pFilm)){
 			valoration=this.NMatrix.getValue(pUser, pFilm);
@@ -63,6 +63,7 @@ public abstract class FilterMode {
 		return valoration;
 	}
 	public Matrix unNormalizeMatrix(int pIdUser,Matrix pMatrix) {
+		//SI LA MATRIZ ESTA NORMALIZADA, LA DESNORMALIZA
 		return(RatingCatalogue.getRatingCatalogue().unNormalizeMatrix(pIdUser, pMatrix));
 	}
 	public Matrix getEstimatedRatings(Integer pIdUser) {
@@ -82,5 +83,5 @@ public abstract class FilterMode {
 		return estimatedRatings;
 	}
 	public abstract Double getEstimatedValorationForFilm(Integer pIdUser,Integer pFilm);
-	//public abstract Matrix calculateNSimilars(Integer pIdUser, Integer pN, Integer pFilm);
+
 }

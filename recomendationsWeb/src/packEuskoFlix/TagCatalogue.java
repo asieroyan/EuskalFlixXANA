@@ -17,10 +17,11 @@ public class TagCatalogue {
 	public static TagCatalogue getTagCatalogue() {
 		if (mTagCatalogue == null) {
 			mTagCatalogue = new TagCatalogue();
+			mTagCatalogue.initialize();
 		}
 		return mTagCatalogue;
 	}
-	public void initialize() {
+	private void initialize() {
 		this.getTags();
 	}
 	private void getTags() {
