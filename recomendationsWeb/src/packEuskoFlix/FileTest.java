@@ -19,8 +19,8 @@ public class FileTest {
 		//CALCULAMOS LAS PELICULAS RECOMENDADAS (POR DEFECTO USERFILTER)
 		cronometro= new Stopwatch();
 		//ratings.changeNormalizeMode(); //Cambia a normalizar
-		ratings.changeValorationMode("contentfilter"); //Cambia el modo de valorar
-		int user=4045; //guarda el user
+		//ratings.changeValorationMode("contentfilter"); //Cambia el modo de valorar
+		int user=2048; //guarda el user
 		VectorInteger recommends=ratings.recommendFilm(user); //pide peliculas recomendadas para el user
 		System.out.println("-------------------------------");
 		System.out.println("Las peliculas recomendadas para el usuario "+user +" son:");
