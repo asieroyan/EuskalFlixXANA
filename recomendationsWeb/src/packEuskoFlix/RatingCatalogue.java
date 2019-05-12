@@ -84,6 +84,16 @@ public class RatingCatalogue {
 			this.normalizeMode=new NonNormalized();
 		}
 	}
+	public void changeToNormalize() {
+		if (this.normalizeMode instanceof NonNormalized) {
+			this.normalizeMode=new NormalizeByMedian();
+		}
+	}
+	public void changeToNonNormalized() {
+		if (this.normalizeMode instanceof NormalizeByMedian) {
+			this.normalizeMode=new NonNormalized();
+		}
+	}
 	public void changeValorationMode(String pMode) { //Cambia el modo de valorar
 		//Si se introduce cualquier otro valor que no sea correcto el programa no hace nada
 		if (pMode.equalsIgnoreCase("UserFilter")){

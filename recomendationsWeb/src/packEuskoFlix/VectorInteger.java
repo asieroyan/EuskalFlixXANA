@@ -31,7 +31,7 @@ public class VectorInteger{
 	private Iterator<Integer> getIterador(){
 		return this.vector.iterator();
 	}
-	private boolean contains(Integer pValue) {
+	public boolean contains(Integer pValue) {
 		return vector.contains(pValue);
 	}
 	public void addvaluesFromVector(VectorInteger pVector2) { //ANADE LOS VALORES QUE NO TIENE DEL OTRO VECTOR

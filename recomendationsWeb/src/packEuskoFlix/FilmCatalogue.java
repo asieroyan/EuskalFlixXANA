@@ -2,6 +2,7 @@ package packEuskoFlix;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.io.File;
@@ -72,5 +73,20 @@ public class FilmCatalogue {
 		//ArrayList<Integer> films=(ArrayList<Integer>) this.list.keySet();
 		allfilms.addIntegerSet(films);
 		return allfilms;
+	}
+	public String getFilmTitle(int pFilmId) {
+		return(this.list.get(pFilmId).getTitle());
+	}
+	public String obtainFilmTitlesFromVector(VectorInteger pFilmVector) {
+		String films="";
+		Iterator<Integer> itr=pFilmVector.iterator();
+		while (itr.hasNext()) {
+			int filmAct=itr.next();
+			films= films+filmAct+":"+this.getFilmTitle(filmAct)+"\n";
+		}
+		return films;
+	}
+	public String getAllFilmsTitles() {
+		return(this.obtainFilmTitlesFromVector(this.getAllFilms()));
 	}
 }

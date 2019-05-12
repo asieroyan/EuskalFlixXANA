@@ -11,5 +11,7 @@ public class Film {
 		id = pId;
 		title = pTitle;
 	}
-
+	public String getTitle() {
+		return this.title;
+	}
 }

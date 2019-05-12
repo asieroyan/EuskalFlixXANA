@@ -172,9 +172,9 @@ public class MainMenu extends JFrame {
 		btnRecommend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				RatingCatalogue ratings=RatingCatalogue.getRatingCatalogue();
-				VectorInteger recommnededFilmTittles = RatingCatalogue.getRatingCatalogue().recommendFilm(Integer.parseInt(UserIDText.getText()));
-				String recommnededFilmTittlesText = recommnededFilmTittles.obtainFilmTittlesFromVector();
-				FilmsTextArea.setText(recommnededFilmTittlesText);
+				VectorInteger recommendedFilmTitles = ratings.recommendFilm(Integer.parseInt(UserIDText.getText()));
+				String recommendedFilmTitlesText = FilmCatalogue.getFilmCatalogue().obtainFilmTitlesFromVector(recommendedFilmTitles);
+				FilmsTextArea.setText(recommendedFilmTitlesText);
 			};
 		});
 		
@@ -182,10 +182,13 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (btnNormalized.getText().equals("Normalized")) {
 					btnNormalized.setText("Not normalized");
+					System.out.println("Not normalized");
+					RatingCatalogue.getRatingCatalogue().changeToNonNormalized();
 				}else {
 					btnNormalized.setText("Normalized");
+					System.out.println("Normalized");
+					RatingCatalogue.getRatingCatalogue().changeToNormalize();
 				}
-				RatingCatalogue.getRatingCatalogue().changeNormalizeMode();
 			};
 		});
 		
@@ -196,8 +199,8 @@ public class MainMenu extends JFrame {
 		});
 		showFilms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String FilmTittlesText = filmCatalogue.getAllFilms().obtainFilmTittlesFromVector();
-				FilmsTextArea.setText(FilmTittlesText);
+				String FilmTitlesText = filmCatalogue.getFilmCatalogue().getAllFilmsTitles();
+				FilmsTextArea.setText(FilmTitlesText);
 				FilmsTextArea.setCaretPosition(0);
 			}
 		});
@@ -211,14 +214,14 @@ public class MainMenu extends JFrame {
 	private void selectFilterType(String pFilter) {
 		if (pFilter.equals("Filter by user")) {
 			System.out.println("User");
-			RatingCatalogue.getRatingCatalogue().changeValorationMode("UserFilter");
+			RatingCatalogue.getRatingCatalogue().changeValorationMode("userfilter");
 		}else if(pFilter.equals("Filter by content")){
 			System.out.println("Content");
-			RatingCatalogue.getRatingCatalogue().changeValorationMode("ContentFilter");
+			RatingCatalogue.getRatingCatalogue().changeValorationMode("contentfilter");
 		}
 		else {
 			System.out.println("Product");
-			RatingCatalogue.getRatingCatalogue().changeValorationMode("ProductFilter");
+			RatingCatalogue.getRatingCatalogue().changeValorationMode("productfilter");
 			
 		}
 		

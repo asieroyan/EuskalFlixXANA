@@ -63,7 +63,8 @@ public class LoginMenu extends JFrame {
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MainMenu menu = (MainMenu) getFrames()[1];				
+				MainMenu menu= new MainMenu();
+				//MainMenu menu = (MainMenu) getFrames()[1];
 				if (textField.getText()!=null && RatingCatalogue.getRatingCatalogue().getAllUsers().contains(Integer.parseInt(textField.getText()))) {
 					menu.setVisible(true);
 					getFrames()[0].setVisible(false);
@@ -83,8 +84,6 @@ public class LoginMenu extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel(new ImageIcon("Logo.png"));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		contentPane.add(lblNewLabel_1, BorderLayout.NORTH);
-		
-
 		
 		javax.swing.ImageIcon Imagen = new javax.swing.ImageIcon("/home/lsi/Descargas/a.png");
 		

@@ -1,10 +1,17 @@
 package packEuskoFlix;
 
-//import view.Frame;
+import view.LoginMenu;
 
 public class FileTest {
 
 	public static void main(String[] args) {
+		//CARGA DEL MENU
+		LoginMenu menu= new LoginMenu();
+		menu.setVisible(true);
+		
+		
+		/*
+		ANTIGUAS PRUEBAS
 		// CARGAMOS TODOS LOS DATOS
 		Stopwatch cronometro= new Stopwatch();
 		System.out.println("-------------------------------");
@@ -18,8 +25,8 @@ public class FileTest {
 		
 		//CALCULAMOS LAS PELICULAS RECOMENDADAS (POR DEFECTO USERFILTER)
 		cronometro= new Stopwatch();
-		//ratings.changeNormalizeMode(); //Cambia a normalizar
-		//ratings.changeValorationMode("contentfilter"); //Cambia el modo de valorar
+		ratings.changeNormalizeMode(); //Cambia a normalizar
+		//ratings.changeValorationMode("productfilter"); //Cambia el modo de valorar
 		int user=2048; //guarda el user
 		VectorInteger recommends=ratings.recommendFilm(user); //pide peliculas recomendadas para el user
 		System.out.println("-------------------------------");
@@ -27,6 +34,7 @@ public class FileTest {
 		recommends.printVector();
 		double tiemporecomendacion=cronometro.elapsedTime();
 		System.out.println("Tiempo en recomendar= "+tiemporecomendacion);	
+		*/
 	}
 
 }
